@@ -53,6 +53,12 @@ const twoArraysOld = (array1, array2) => {
 //     return -1;
 // }
 
+// if lengths are different return false
+// for each element1 in array1
+    // if element1 is not contained in array2 return false
+    // remove found element from array2
+// return true
+
 const twoArrays = (array1, array2) => {
 
     if (array1.length !== array2.length) { 
