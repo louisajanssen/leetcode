@@ -41,7 +41,6 @@ const twoArraysOld = (array1, array2) => {
 
 }
 
-// Better solution
 
 // const getIndexOfTarget = (target, arr) => {
 //     for(const i = 0; i < arr.length; i++) {
@@ -59,14 +58,16 @@ const twoArraysOld = (array1, array2) => {
     // remove found element from array2
 // return true
 
-const twoArrays = (array1, array2) => {
+// Higher code quality
+
+const twoArraysV2 = (array1, array2) => {
 
     if (array1.length !== array2.length) { 
         return false
     }
 
-    for (let i = 0; i < array1.length; i++) { 
-        const array2Index = array2.indexOf(array1[i])
+    for (const element of array1) { 
+        const array2Index = array2.indexOf(element)
      
         if (array2Index === -1) {
             return false
@@ -76,24 +77,59 @@ const twoArrays = (array1, array2) => {
     return true; 
 }
 
+//          Array   Hashset/map
+// Contains O(N)    O(1)
+// Insert   O(N)    O(1)
+// Delete   O(N)    O(1)
+// Access   O(1)    -
 
-const test1 = twoArrays([1,2,3], [1,2,3])
-console.log(test1, true) // expect true
+// Set has keys
+// Map has key-value
 
-const test2 = twoArrays([1,2], [1,2,3])
-console.log(test2, false) // expect false
+// faster solution
 
-const test4 = twoArrays([1], [1])
-console.log(test4, true) // expect true
+const twoArrays = (array1, array2) => {
 
-const test6 = twoArrays([1], [])
-console.log(test6, false) // expect false
+    if (array1.length !== array2.length) { 
+        return false
+    }
 
-const test7 = twoArrays([1,2,3], [3,2,1])
-console.log(test7, true) // expect true
+    const map = new Map()
+    for(const element of array2) {
+        const existing = map.get(element) ?? 0
+        map.set(element, existing + 1)
+    }
 
-const test8 = twoArrays([9,1,1,1], [9,1])
-console.log(test8, false) // expect false
+    for (const value of array1) { 
+        const count = map.get(value)
+        if (count === 0) {
+            return false
+        }
+        map.set(value, count - 1)
+    }
+    return true; 
+}
+// Time complexity : 0(n+m)
+// Space complexity: 0(m)
+
+
+// const test1 = twoArrays([1,2,3], [1,2,3])
+// console.log(test1, true) // expect true
+
+// const test2 = twoArrays([1,2], [1,2,3])
+// console.log(test2, false) // expect false
+
+// const test4 = twoArrays([1], [1])
+// console.log(test4, true) // expect true
+
+// const test6 = twoArrays([1], [])
+// console.log(test6, false) // expect false
+
+// const test7 = twoArrays([1,2,3], [3,2,1])
+// console.log(test7, true) // expect true
+
+// const test8 = twoArrays([9,1,1,1], [9,1])
+// console.log(test8, false) // expect false
 
 const test9= twoArrays([1,1], [9,1])
 console.log(test9, false) // expect false
