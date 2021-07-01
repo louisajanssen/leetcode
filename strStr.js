@@ -8,8 +8,8 @@ var strStr = function(haystack, needle) {
     }
     
     for (let j = 0; j < haystack.length; j++) {
-        let isStr = findStr(haystack, needle, j)
-        if (isStr === true) {
+        let hasStr = hasStrAtPosition(haystack, needle, j)
+        if (hasStr) {
             return j
         }
     }
@@ -17,24 +17,19 @@ var strStr = function(haystack, needle) {
     return -1 
 };
 
-var findStr = function(haystack, needle, index) {
+var hasStrAtPosition = function(haystack, needle, index) {
     
-    let count = 0
-    for (let i = index; i < index + 1; i++) {
-        for (let j = 0; j < needle.length; j++) {
-            if (needle[j] === haystack[i]) {
-                count++
-                i++
-            } else {
-                return false
-            }
+    if ((haystack.length - index) < needle.length) {
+        return false
+    }
+    
+    for (let i = 0; i < needle.length; i++) {
+        if (needle[i] !== haystack[i + index]) {
+            return false
         }
     }
-    if (count === needle.length) {
-        return true
-    }
     
-    return false
+    return true;
 }
 
 
