@@ -4,24 +4,45 @@
 
 var searchInsert = function(nums, target) {
     
-    if (target > nums[nums.length -1]) {
-        return nums.length
-    }
+    let end = nums.length -1
+    let start = 0
     
-    if (target < nums[0]) {
+    if (target > nums[end]) {
+        return end + 1
+    }
+
+    if (target < nums[start]) {
         return 0
     }
     
-    for (let i = 0; i < nums.length; i++) {
-        if (nums[i] === target) {
-            return i
-        } else if (target > nums[i] && target < nums[i+1]) {
-            return i+1
-        }
+    if (target === nums[end]) {
+        return end
     }
-};
+    if (target === nums[0]) {
+        return 0
+    }
+    
+    
+    while (start + 1 < end) {
+        let middle = Math.floor((start + end)/2)
+        
+        if (target === nums[middle]) {
+            return middle
+        }
+        if (target > nums[middle]) {
+            start = middle
+        } else {
+            end = middle
+        }
+        
+    }
+    
+    if (target > nums[start] && target < nums[end]) {
+        return end
+    }
 
-let test1 = searchInsert([1,3,5,6], 5)
+};
+let test1 = searchInsert([1,3,5,6], 6)
 console.log(test1)
 
 let test2 = searchInsert([1,3,5,6], 0)
