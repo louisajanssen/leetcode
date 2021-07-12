@@ -11,25 +11,14 @@ var addBinary = function(a, b) {
         let elemB = b[b.length - i - 1]
 
         //console.log('a: ', elemA,'b: ', elemB, 'carry: ', carry)
-        
-        if (elemB === undefined) {
-            sum = getBinaryNum(elemA, '0', carry)
-        } else if (elemA === undefined) {
-            sum = getBinaryNum('0', elemB, carry)
-        }else {
-            sum = getBinaryNum(elemA, elemB, carry)
-        }
+    
+        sum = getBinaryNum(elemA ?? '0', elemB ?? '0', carry)
 
         //console.log('sum: ', sum)
 
         
-        if (sum.length === 2) {
-            carry = sum[0]
-            numArray.unshift(sum[1])
-        } else {
-            carry = '0'
-            numArray.unshift(sum[0])
-        }
+        carry = sum[0]
+        numArray.unshift(sum[1])
         //console.log('carry: ',carry, 'numArray: ', numArray)
     }
 
@@ -44,27 +33,29 @@ var addBinary = function(a, b) {
     
 };
 
+const convertToNum = (a) => {
+    if (a === '1') {
+        return 1
+    }
+
+    return 0
+}
+
 const getBinaryNum = (a,b, carry) => {
 
-    //console.log(a, b, carry)
+    let num = convertToNum(a) + convertToNum(b) + convertToNum(carry)
 
-    if (a === '0' && b === '0' && carry === '1') {
-        return ['1']
-    } else if (a === '1' && b === '0' && carry === '1') {
+    if (num === 0) {
+        return ['0', '0']
+    } else if (num === 1) {
+        return ['0', '1']
+    } else if (num === 2) {
         return ['1', '0']
-    } else if (a === '0' && b === '1' && carry === '1') {
-        return ['1', '0']
-    } else if (a === '1' && b === '1' && carry === '1') {
+    } else {
         return ['1', '1']
-    } else if (a === '1' && b === '1' ) {
-        return ['1', '0']
-    } else if (a === '1' && b === '0' ) {
-        return ['1']
-    } else if (a === '0' && b === '1') {
-        return ['1']
-    } else if (a === '0' && b === '0') {
-        return ['0']
     }
+
+    
 }
 // let test = getBinaryNum('0', '0', '1')
 // console.log(test)
