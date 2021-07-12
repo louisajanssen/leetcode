@@ -11,6 +11,7 @@ var plusOne = function(digits) {
     res.unshift(num % 10)
     
     for (let i = digits.length - 2; i >= 0; i--) {
+        console.log(res)
         num = digits[i] + (num >= 10 ? 1 : 0)
         res.unshift(num % 10)
     }
